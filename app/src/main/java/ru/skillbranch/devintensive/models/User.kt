@@ -3,22 +3,10 @@ package ru.skillbranch.devintensive.models
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
-//TODO
 
 
 
-/*
-Реализуй паттерн Builder для класса User.
-User.Builder().id(s)
-.firstName(s)
-.lastName(s)
-.avatar(s)
-.rating(n)
-.respect(n)
-.lastVisit(d)
-.isOnline(b)
-.build() должен вернуть объект User
- */
+
 data class User(
     val id: String,
     var firstName: String?,
