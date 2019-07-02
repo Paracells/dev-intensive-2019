@@ -9,8 +9,7 @@ object Utils {
 
         var firstName = parts?.getOrNull(0).toString()
         var lastName = parts?.getOrNull(1).toString()
-        println(firstName)
-        println(lastName)
+
 
 
         return (if (firstName.isBlank()) "null" else firstName) to (if (lastName.isBlank()) "null" else lastName)
