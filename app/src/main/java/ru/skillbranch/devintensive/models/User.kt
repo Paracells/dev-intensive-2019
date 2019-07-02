@@ -24,6 +24,36 @@ data class User(
         avatar = null
     )
 
+    class Builder {
+        var id = ""
+        var firstName: String? = null
+        var lastName: String? = null
+        var avatar: String? = null
+        var rating: Int = 0
+        var respect: Int = 0
+        var lastVisit: Date? = null
+        var isOnline: Boolean = false
+
+        fun id(s: String) = apply { id = s }
+        fun firstName(s: String?) = apply { firstName = s }
+        fun lastName(s: String?) = apply { lastName = s }
+        fun avatar(s: String?) = apply { avatar = s }
+        fun rating(n: Int) = apply { rating = n }
+        fun respect(n: Int) = apply { respect = n }
+        fun lastVisit(d: Date?) = apply { lastVisit = d }
+        fun isOnline(b: Boolean) = apply { isOnline = b }
+
+        fun build() = User(
+            if (id.isBlank()) "${++lastId}" else id,
+            firstName,
+            lastName,
+            avatar,
+            rating,
+            respect,
+            lastVisit,
+            isOnline)
+    }
+
 
 
     companion object Factory {
