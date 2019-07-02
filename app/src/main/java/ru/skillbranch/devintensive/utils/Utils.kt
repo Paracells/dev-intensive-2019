@@ -2,18 +2,24 @@ package ru.skillbranch.devintensive.utils
 
 
 object Utils {
-    fun parseFullName(fullName: String?): Pair<String?, String?> {
+    //    fun parseFullName(fullName: String?): Pair<String?, String?> {
+////
+//        val parts: List<String>? = fullName?.trim()?.split(" ")
 //
-        val parts: List<String>? = fullName?.trim()?.split(" ")
-
-
-        var firstName = parts?.getOrNull(0).toString()
-        var lastName = parts?.getOrNull(1).toString()
-
-
-
-        return (if (firstName.isBlank()) "null" else firstName) to (if (lastName.isBlank()) "null" else lastName)
-
+//
+//        var firstName = parts?.getOrNull(0).toString()
+//        var lastName = parts?.getOrNull(1).toString()
+//
+//
+//
+//        return (if (firstName.isBlank()) "null" else firstName) to (if (lastName.isBlank()) "null" else lastName)
+//
+//    }
+    fun parseFullName(fullName: String?) = when {
+        fullName.isNullOrBlank() -> null to null
+        else -> with(fullName.replace("\\s+".toRegex(), " ").split(" ")) {
+            getOrNull(0)?.run { if (isBlank()) null else this } to getOrNull(1)?.run { if (isBlank()) null else this }
+        }
     }
 
 
