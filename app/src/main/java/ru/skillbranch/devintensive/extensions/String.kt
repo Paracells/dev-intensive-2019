@@ -19,7 +19,8 @@ fun String.truncate(value: Int = 16): String {
  */
 fun String.stripHtml(): String {
     var intag = false
-    val inp = this
+    val inp = this.trim().replace("\\s+".toRegex(), " ").replace("\\n".toRegex(), "")
+    println(inp)
     var outp = ""
 
     for (i in 0 until inp.length) {
@@ -35,6 +36,6 @@ fun String.stripHtml(): String {
             outp += inp[i]
         }
     }
-    return outp.trim().replace("\\s+".toRegex(), " ")
+    return outp.trim()
 
 }
