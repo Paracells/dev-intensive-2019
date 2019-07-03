@@ -10,6 +10,7 @@ const val MINUTE = 60 * SECOND
 const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 
+
 fun Date.format(pattern: String = "HH:mm:ss dd.MM.yy"): String {
 
     var dateFormat = SimpleDateFormat(pattern, Locale("ru"))
@@ -25,11 +26,14 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
         TimeUnits.MINUTE -> value * MINUTE
         TimeUnits.HOUR -> value * HOUR
         TimeUnits.DAY -> value * DAY
+
+
     }
     this.time = time
     return this
 
 }
+
 
 enum class TimeUnits {
     SECOND,
@@ -38,6 +42,24 @@ enum class TimeUnits {
     DAY
 }
 
+fun TimeUnits.plural(value: Long):String {
+    when (this) {
+        TimeUnits.SECOND -> { //секунДА, секунДЫ, секунД, 1 секунДУ
+           return  "$value ${secondsAsWord(value)}"
+        }
+        TimeUnits.MINUTE -> { //минуТА, минуТЫ, минуТ
+            return  "$value ${minutesAsWord(value)}"
+        }
+        TimeUnits.HOUR -> { //час, часА, часОВ
+            return  "$value ${hoursAsWord(value)}"
+        }
+        TimeUnits.DAY -> { //день, дня, дней
+            return  "$value ${daysAsWord(value)}"
+        }
+
+    }
+    return  "hello"
+}
 
 
 val prefYear = "бол"
@@ -84,6 +106,12 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 
 }
 
+fun secondsAsWord(value: Long) = when (value.asPlurals) {
+    Plurals.ONE -> "секунду"
+    Plurals.FEW -> "секунды"
+    Plurals.MANY -> "секунд"
+    Plurals.OTHER -> "секунду"
+}
 
 fun minutesAsWord(value: Long) = when (value.asPlurals) {
     Plurals.ONE -> "минуту"
