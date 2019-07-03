@@ -39,27 +39,36 @@ enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
-    DAY
-}
+    DAY;
 
-fun TimeUnits.plural(value: Long):String {
-    when (this) {
-        TimeUnits.SECOND -> { //секунДА, секунДЫ, секунД, 1 секунДУ
-           return  "$value ${secondsAsWord(value)}"
+    fun plural(value: Long): String {
+        return when (this) {
+            SECOND -> "$value ${secondsAsWord(value)}"
+            MINUTE -> "$value ${minutesAsWord(value)}"
+            HOUR -> "$value ${hoursAsWord(value)}"
+            DAY -> "$value ${daysAsWord(value)}"
         }
-        TimeUnits.MINUTE -> { //минуТА, минуТЫ, минуТ
-            return  "$value ${minutesAsWord(value)}"
-        }
-        TimeUnits.HOUR -> { //час, часА, часОВ
-            return  "$value ${hoursAsWord(value)}"
-        }
-        TimeUnits.DAY -> { //день, дня, дней
-            return  "$value ${daysAsWord(value)}"
-        }
-
     }
-    return  "hello"
 }
+
+//fun TimeUnits.plural(value: Long):String {
+//    when (this) {
+//        TimeUnits.SECOND -> { //секунДА, секунДЫ, секунД, 1 секунДУ
+//           return  "$value ${secondsAsWord(value)}"
+//        }
+//        TimeUnits.MINUTE -> { //минуТА, минуТЫ, минуТ
+//            return  "$value ${minutesAsWord(value)}"
+//        }
+//        TimeUnits.HOUR -> { //час, часА, часОВ
+//            return  "$value ${hoursAsWord(value)}"
+//        }
+//        TimeUnits.DAY -> { //день, дня, дней
+//            return  "$value ${daysAsWord(value)}"
+//        }
+//
+//    }
+//    return  "hello"
+//}
 
 
 val prefYear = "бол"
