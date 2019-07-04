@@ -3,7 +3,7 @@ package ru.skillbranch.devintensive.extensions
 fun String.truncate(value: Int = 16): String {
     var a = this.trim()
     if (a.length >= value+1) {
-        return "${this.substring(0, value+1)}..."
+        return "${(this.substring(0, value+1)).trim()}..."
     } else {
         return "${this.trim()}"
     }
