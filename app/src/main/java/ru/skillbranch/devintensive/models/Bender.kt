@@ -114,7 +114,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             Question.PROFESSION -> {
                 when {
                     data.isBlank() -> Validation.ERROR_PROFESSION
-                    data[0].isUpperCase() -> Validation.OK
+                    data[0].isLowerCase() -> Validation.OK
                     else -> Validation.ERROR_PROFESSION
                 }
             }
@@ -122,8 +122,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             Question.MATERIAL -> {
                 when {
                     data.isBlank() -> Validation.ERROR_MATERIAL
-                    !(data.contains("[0-9]".toRegex())) -> Validation.OK
-                    else -> Validation.ERROR_MATERIAL
+                    data.contains(Regex("\\d")) -> Validation.ERROR_MATERIAL
+                    else -> Validation.OK
                 }
 
             }
@@ -139,7 +139,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             Question.SERIAL -> {
                 when {
                     data.isBlank() -> Validation.ERROR_SERIAL
-                    data.isDigitsOnly() && data.length <= 7 -> Validation.OK
+                    data.isDigitsOnly() && data.length == 7 -> Validation.OK
                     else -> Validation.ERROR_SERIAL
                 }
 
