@@ -60,17 +60,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun hideKeyboard() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO
     }
 
     fun isKeyboardClosed(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
+        //TODO
 
     }
 
     fun isKeyboardOpen(): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        //TODO
 
 
     }
