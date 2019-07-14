@@ -59,20 +59,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         Log.d("M_MainActivity", "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
     }
 
-    fun hideKeyboard() {
-        //TODO
-    }
-
-    fun isKeyboardClosed(): Boolean {
-        //TODO
-
-    }
-
-    fun isKeyboardOpen(): Boolean {
-
-        //TODO
-
-
-    }
+//    fun hideKeyboard() {
+//        //TODO
+//    }
+//
+//    fun isKeyboardClosed(): Boolean {
+//        //TODO
+//
+//    }
+//
+//    fun isKeyboardOpen(): Boolean {
+//
+//        //TODO
+//
+//
+//    }
 
 }
