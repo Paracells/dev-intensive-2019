@@ -21,6 +21,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         return if (a == Validation.OK) {
             when {
                 question == Question.IDLE -> {
+                    status = Status.NORMAL
+                    question = Question.NAME
                     question.question to status.color
 
                 }
@@ -67,7 +69,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
 
     enum class Question(val question: String, val answers: List<String>) {
-        NAME("Как меня зовут?", listOf("Бендер", "bender")) {
+        NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
@@ -100,7 +102,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         ERROR_SERIAL("Серийный номер содержит только цифры, и их 7")
     }
 
-    private fun validationCheck(data: String): Validation {
+    fun validationCheck(data: String): Validation {
         return when (question) {
             Question.NAME -> {
                 when {
@@ -112,8 +114,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             Question.PROFESSION -> {
                 when {
                     data.isBlank() -> Validation.ERROR_PROFESSION
-                    data[0].isLowerCase() -> Validation.ERROR_PROFESSION
-                    else -> Validation.OK
+                    data[0].isUpperCase() -> Validation.OK
+                    else -> Validation.ERROR_PROFESSION
                 }
             }
 
