@@ -51,24 +51,7 @@ enum class TimeUnits {
     }
 }
 
-//fun TimeUnits.plural(value: Long):String {
-//    when (this) {
-//        TimeUnits.SECOND -> { //секунДА, секунДЫ, секунД, 1 секунДУ
-//           return  "$value ${secondsAsWord(value)}"
-//        }
-//        TimeUnits.MINUTE -> { //минуТА, минуТЫ, минуТ
-//            return  "$value ${minutesAsWord(value)}"
-//        }
-//        TimeUnits.HOUR -> { //час, часА, часОВ
-//            return  "$value ${hoursAsWord(value)}"
-//        }
-//        TimeUnits.DAY -> { //день, дня, дней
-//            return  "$value ${daysAsWord(value)}"
-//        }
-//
-//    }
-//    return  "hello"
-//}
+
 
 
 val prefYear = "бол"
