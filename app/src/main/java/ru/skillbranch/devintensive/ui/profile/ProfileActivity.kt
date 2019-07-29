@@ -105,6 +105,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         if (!isEditMode) {
+
             tv_nick_name.text = Utils.transliteration("${et_first_name.text} ${et_last_name.text}", "_")
         }
         ic_eye.visibility = if (isEditMode) View.GONE else View.VISIBLE
