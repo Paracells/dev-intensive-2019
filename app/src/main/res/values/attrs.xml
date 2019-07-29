@@ -4,8 +4,14 @@
         <attr name="aspectRatio" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="RoundedImageView">
+        <attr name="cv_bordercolor" format="color">white</attr>
+        <attr name="cv_borderWidth" format="dimension">2dp</attr>
+    </declare-styleable>
+
     <attr name="colorAccentedSurface" format="reference" />
     <attr name="colorDivider" format="reference" />
     <attr name="colorIcon" format="reference" />
+
 
 </resources>
