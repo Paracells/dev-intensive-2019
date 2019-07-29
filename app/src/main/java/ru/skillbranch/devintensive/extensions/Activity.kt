@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
 import android.view.inputmethod.InputMethodManager
-import ru.skillbranch.devintensive.MainActivity
+import ru.skillbranch.devintensive.ui.profile.ProfileActivity
 
-fun MainActivity.isKeyboardClosed(): Boolean {
+fun ProfileActivity.isKeyboardClosed(): Boolean {
     val rootView = this.window.decorView
     val rect = Rect()
     rootView.getWindowVisibleDisplayFrame(rect)
@@ -15,7 +15,7 @@ fun MainActivity.isKeyboardClosed(): Boolean {
     return kh <= h * .15
 }
 
-fun MainActivity.isKeyboardOpen(): Boolean {
+fun ProfileActivity.isKeyboardOpen(): Boolean {
     val rootView = this.window.decorView
     val rect = Rect()
     rootView.getWindowVisibleDisplayFrame(rect)
