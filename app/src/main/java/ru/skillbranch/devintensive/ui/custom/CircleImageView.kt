@@ -90,17 +90,14 @@ class CircleImageView @JvmOverloads constructor(
 
 
     @Dimension
-    fun getBorderWidth(): Int {
-        return defaultBorderWidth.toInt()
-    }
+    fun getBorderWidth() = pxtoDp(defaultBorderWidth.toInt())
 
     fun setBorderWidth(@Dimension dp: Int) {
         defaultBorderWidth = dptoPx(dp).toFloat()
     }
 
-    fun getBorderColor(): Int {
-        return defaultBorderColor
-    }
+    fun getBorderColor() = defaultBorderColor
+
 
     fun setBorderColor(hex: String) {
         defaultBorderColor = Color.parseColor(hex)
@@ -117,9 +114,9 @@ class CircleImageView @JvmOverloads constructor(
         return (dp * scale + 0.5f).toInt()
     }
 
-//    fun pxtoDp(): Int {
-//        var scale = resources.displayMetrics.density
-//        return (px/scale + 0.5f).toInt()
-//
-//    }
+    fun pxtoDp(px: Int): Int {
+        var scale = resources.displayMetrics.density
+        return (px / scale + 0.5f).toInt()
+
+    }
 }
