@@ -2,11 +2,16 @@ package ru.skillbranch.devintensive.ui.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
+import androidx.core.content.ContextCompat
+import ru.skillbranch.devintensive.App
 import ru.skillbranch.devintensive.R
 import kotlin.math.max
 
@@ -36,10 +41,9 @@ class CircleImageView @JvmOverloads constructor(
 
     companion object {
         val DEFAULT_COLOR = Color.WHITE
-        val DEFAULT_BORDER_WIDTH = 201
+        val DEFAULT_BORDER_WIDTH = 2
     }
 
-    private val paintBorder: Paint = Paint().apply { isAntiAlias = true }
     private var defaultBorderColor = DEFAULT_COLOR
     private var defaultBorderWidth = DEFAULT_BORDER_WIDTH * resources.displayMetrics.density
 
@@ -47,7 +51,9 @@ class CircleImageView @JvmOverloads constructor(
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
 
-            defaultBorderColor = a.getColor(R.styleable.CircleImageView_cv_bordercolor, defaultBorderColor)
+            defaultBorderColor =
+                a.getColor(R.styleable.CircleImageView_cv_borderColor, defaultBorderColor)
+
             defaultBorderWidth = a.getDimension(R.styleable.CircleImageView_cv_borderWidth, defaultBorderWidth)
             a.recycle()
 
@@ -55,17 +61,14 @@ class CircleImageView @JvmOverloads constructor(
         }
     }
 
-    var mStrokePaint = Paint().apply {
-        color = defaultBorderColor
-        style = Paint.Style.STROKE
-        strokeWidth = defaultBorderWidth
-    }
+
 
 
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
-        val halfWidth: Float = width / 2f
-        val halfHeight: Float = height / 2f
+
+        val halfWidth: Float = (width / 2).toFloat()
+        val halfHeight: Float = (height / 2).toFloat()
         val radius = max(halfWidth, halfHeight)
         val path = Path().apply {
             addCircle(halfWidth, halfHeight, radius, Path.Direction.CCW)
@@ -73,17 +76,18 @@ class CircleImageView @JvmOverloads constructor(
 
         canvas?.clipPath(path)
         super.onDraw(canvas)
-        //      val circleCenter = (112 - defaultBorderWidth * 2).toInt() / 2
+        var paint = Paint()
+        paint.color = defaultBorderColor
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = defaultBorderWidth
+        canvas?.drawCircle(halfWidth, halfHeight, radius, paint)
 
-        //  circleCenter = (heightCircle - borderWidth * 2).toInt() / 2
 
-        //paintBorder.color = defaultBorderColor
 
-        canvas?.drawOval(RectF(), mStrokePaint)
 
-        //   canvas?.drawCircle(0f, 0f, defaultBorderWidth, paintBorder)
 
     }
+
 
     @Dimension
     fun getBorderWidth(): Int {
@@ -91,7 +95,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     fun setBorderWidth(@Dimension dp: Int) {
-        defaultBorderWidth = dp.toFloat()
+        defaultBorderWidth = dptoPx(dp).toFloat()
     }
 
     fun getBorderColor(): Int {
@@ -103,6 +107,19 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     fun setBorderColor(@ColorRes colorId: Int) {
-        defaultBorderColor = colorId
+
+        defaultBorderColor = ContextCompat.getColor(App.applicationContext(), colorId)
     }
+
+
+    fun dptoPx(dp: Int): Int {
+        var scale = resources.displayMetrics.density
+        return (dp * scale + 0.5f).toInt()
+    }
+
+//    fun pxtoDp(): Int {
+//        var scale = resources.displayMetrics.density
+//        return (px/scale + 0.5f).toInt()
+//
+//    }
 }
