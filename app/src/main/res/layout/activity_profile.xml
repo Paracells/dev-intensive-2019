@@ -36,7 +36,7 @@
                 android:src="@drawable/ic_switch_day_night" />
 
 
-            <ru.skillbranch.devintensive.ui.custom.RoundedImageView
+            <ru.skillbranch.devintensive.ui.custom.CircularImageView
                 android:scaleType="centerCrop"
                 android:src="@drawable/s1200"
                 android:id="@+id/iv_avatar"
