@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
-import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -70,16 +69,25 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         et_repository.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+                if (viewModel.checkDataRepository(p0.toString())) {
+                    wr_repository.error = "Невалидный адрес репозитория"
+                } else {
+                    wr_repository.error = ""
+
+                }
+            }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                viewModel
+
             }
 
         })
+
     }
+
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
@@ -118,10 +126,7 @@ class ProfileActivity : AppCompatActivity() {
             v.background.alpha = if (isEditMode) 255 else 0
         }
 
-        if (!isEditMode) {
 
-            tv_nick_name.text = Utils.transliteration("${et_first_name.text} ${et_last_name.text}", "_")
-        }
         ic_eye.visibility = if (isEditMode) View.GONE else View.VISIBLE
         wr_about.isCounterEnabled = isEditMode
 
@@ -156,6 +161,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveProfileInfo() {
+        if (viewModel.error.value == true) {
+            et_repository.setText("")
+        }
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),

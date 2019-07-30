@@ -12,6 +12,7 @@ class ProfileViewModel : ViewModel() {
     private val repository: PreferencesRepository = PreferencesRepository
     private val profileData = MutableLiveData<Profile>()
     private val appTheme = MutableLiveData<Int>()
+    var error = MutableLiveData<Boolean>()
 
     init {
         Log.d("M_ProfileViewModel", "init view model")
@@ -45,6 +46,43 @@ class ProfileViewModel : ViewModel() {
         }
 
         repository.saveAppTheme(appTheme.value!!)
+    }
+
+    fun checkDataRepository(s: String): Boolean {
+        if (checkInputRegExpRepository(s)) {
+            error.value = true
+            return true
+        } else {
+            error.value = false
+            return false
+        }
+
+    }
+
+    fun checkInputRegExpRepository(repository: String): Boolean {
+        val regexStr =
+            "^(?:https://)?(?:www.)?(?:github.com/)[^/|\\s]+(?<!${getRegexExceptions()})(?:/)?$"
+        val regex = Regex(regexStr)
+        return (repository.isNotEmpty() && !regex.matches(repository))
+    }
+
+    private fun getRegexExceptions(): String {
+        val exceptions = arrayOf(
+            "enterprise",
+            "features",
+            "topics",
+            "collections",
+            "trending",
+            "events",
+            "marketplace",
+            "pricing",
+            "nonprofit",
+            "customer-stories",
+            "security",
+            "login",
+            "join"
+        )
+        return exceptions.joinToString("|\\b", "\\b")
     }
 
 
