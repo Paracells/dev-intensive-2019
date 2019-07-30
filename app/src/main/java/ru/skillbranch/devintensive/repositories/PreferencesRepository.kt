@@ -40,13 +40,14 @@ object PreferencesRepository {
 
     }
 
-    fun getProfile(): Profile? = Profile(
+    fun getProfile(): Profile = Profile(
         prefs.getString(FIRST_NAME, "")!!,
         prefs.getString(LAST_NAME, "")!!,
         prefs.getString(ABOUT, "")!!,
         prefs.getString(REPOSITORY, "")!!,
         prefs.getInt(RATING, 0),
         prefs.getInt(RESPECT, 0)
+
 
     )
 

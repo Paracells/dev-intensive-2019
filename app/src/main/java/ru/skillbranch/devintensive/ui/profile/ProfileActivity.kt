@@ -32,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         //TODO set custom Theme this before super and setContentView
         setTheme(R.style.AppTheme)
 
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)

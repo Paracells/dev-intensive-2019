@@ -28,7 +28,7 @@ import kotlin.math.max
 //2*resources.displayMetrics.density - вот так в коде
 //-------------------------
 
-class CircularImageView @JvmOverloads constructor(
+class CircleImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -45,10 +45,10 @@ class CircularImageView @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.CircularImageView)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
 
-            defaultBorderColor = a.getColor(R.styleable.CircularImageView_cv_bordercolor, defaultBorderColor)
-            defaultBorderWidth = a.getDimension(R.styleable.CircularImageView_cv_borderWidth, defaultBorderWidth)
+            defaultBorderColor = a.getColor(R.styleable.CircleImageView_cv_bordercolor, defaultBorderColor)
+            defaultBorderWidth = a.getDimension(R.styleable.CircleImageView_cv_borderWidth, defaultBorderWidth)
             a.recycle()
 
 

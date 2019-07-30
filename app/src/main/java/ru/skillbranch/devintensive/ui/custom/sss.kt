@@ -19,7 +19,7 @@
 // * Copyright (C) 2019 Mikhael LOPEZ
 // * Licensed under the Apache License Version 2.0
 // */
-//class CircularImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+//class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
 //    : AppCompatImageView(context, attrs, defStyleAttr) {
 //
 //    companion object {
@@ -97,7 +97,7 @@
 //
 //    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int) {
 //        // Load the styled attributes and set their properties
-//        val attributes = context.obtainStyledAttributes(attrs, R.styleable.CircularImageView, defStyleAttr, 0)
+//        val attributes = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0)
 //
 //        // Init Background Color
 //        circleColor = attributes.getColor(R.styleable.CircularImageView_civ_circle_color, Color.WHITE)
@@ -156,7 +156,7 @@
 //        canvas.drawCircle(circleCenterWithBorder, circleCenterWithBorder, circleCenterWithBorder - margeWithShadowRadius, paintBorder)
 //        // Draw Circle background
 //        canvas.drawCircle(circleCenterWithBorder, circleCenterWithBorder, circleCenter - margeWithShadowRadius, paintBackground)
-//        // Draw CircularImageView
+//        // Draw CircleImageView
 //        canvas.drawCircle(circleCenterWithBorder, circleCenterWithBorder, circleCenter - margeWithShadowRadius, paint)
 //    }
 //
