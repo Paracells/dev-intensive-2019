@@ -3,10 +3,12 @@ package ru.skillbranch.devintensive.ui.profile
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -98,8 +100,23 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun updateTheme(mode: Int) {
-        Log.d("M_ProfileActivity", "updateTheme")
         delegate.setLocalNightMode(mode)
+        updateDrawable(viewModel.getProfileData().value)
+    }
+
+    private fun updateDrawable(profile: Profile?) {
+
+        val initials = Utils.toInitials(profile?.firstName, profile?.lastName)
+        val drawable = if (initials == null) {
+            resources.getDrawable(R.drawable.ic_avatar, theme)
+        } else {
+            val color = TypedValue()
+            theme.resolveAttribute(R.attr.colorAccent, color, true)
+            ColorDrawable(color.data)
+        }
+        iv_avatar.setImageDrawable(drawable)
+        iv_avatar.setText(initials)
+
     }
 
     private fun updateUI(profile: Profile) {
@@ -109,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        updateAvatar(profile)
+        updateDrawable(profile)
     }
 
     private fun showCurrentMode(isEditMode: Boolean) {
@@ -178,10 +195,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateAvatar(profile: Profile) {
-        val initials = Utils.toInitials(profile.firstName, profile.lastName)
-        iv_avatar.generateAvatar(initials, Utils.convertSpToPx(this, 48), theme)
-    }
 
 
 }
