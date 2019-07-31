@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -107,6 +108,8 @@ class ProfileActivity : AppCompatActivity() {
                 v.text = it[k].toString()
             }
         }
+
+        updateAvatar(profile)
     }
 
     private fun showCurrentMode(isEditMode: Boolean) {
@@ -131,6 +134,7 @@ class ProfileActivity : AppCompatActivity() {
         wr_about.isCounterEnabled = isEditMode
 
         with(btn_edit) {
+
             val filter: ColorFilter? = if (isEditMode) {
                 PorterDuffColorFilter(
                     resources.getColor(R.color.color_accent, theme),
@@ -172,6 +176,11 @@ class ProfileActivity : AppCompatActivity() {
         ).apply {
             viewModel.saveProfileData(this)
         }
+    }
+
+    private fun updateAvatar(profile: Profile) {
+        val initials = Utils.toInitials(profile.firstName, profile.lastName)
+        iv_avatar.generateAvatar(initials, Utils.convertSpToPx(this, 48), theme)
     }
 
 
