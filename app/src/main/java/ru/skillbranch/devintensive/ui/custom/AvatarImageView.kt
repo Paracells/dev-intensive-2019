@@ -13,6 +13,9 @@ class AvatarImageView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ImageView(context, attrs, defStyleAttr) {
+    fun setInitials(initials: String) {
+    }
+
     private var avatarSize: Int = 0
     private var rect: Rect = Rect()
     private var pathR: Path = Path()
@@ -36,7 +39,5 @@ class AvatarImageView @JvmOverloads constructor(
         private const val DEFAULT_BORDER_COLOR = Color.WHITE
     }
 
-    fun setInitials(initials: String) {
 
-    }
 }
