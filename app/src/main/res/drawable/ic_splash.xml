@@ -1,8 +1,8 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
+    android:viewportWidth="10800"
     android:width="1080dp"
     android:height="1920dp"
-    android:viewportWidth="10800"
     android:viewportHeight="19200">
     <path
         android:fillColor="#FFFFFF"
@@ -17,10 +17,10 @@
         android:pathData="M0 0l0 7060c0 0 2190 1308 5400 1293 3210 -16 5400 -1293 5400 -1293l0 -7060 -10800 0z">
         <aapt:attr name="android:fillColor">
             <gradient
+                android:tileMode="clamp"
                 android:centerX="647.6869"
                 android:centerY="-83.98846"
                 android:gradientRadius="10102.23"
-                android:tileMode="clamp"
                 android:type="radial">
                 <item
                     android:color="#F8FFFF"

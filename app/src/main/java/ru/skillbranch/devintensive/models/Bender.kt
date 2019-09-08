@@ -4,7 +4,7 @@ import androidx.core.text.isDigitsOnly
 
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
 
-    fun askQuestion() = when (question) {
+    fun askQuestion(): String = when (question) {
         Question.NAME -> Question.NAME.question
         Question.PROFESSION -> Question.PROFESSION.question
         Question.MATERIAL -> Question.MATERIAL.question
@@ -13,42 +13,24 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         Question.IDLE -> Question.IDLE.question
     }
 
-
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-
-        val a = validationCheck(answer)
-
-        return if (a == Validation.OK) {
-            when {
-                question == Question.IDLE -> {
-                    status = Status.NORMAL
-                    question = Question.NAME
-                    question.question to status.color
-
-                }
-                question.answers.contains(answer.toLowerCase()) -> {
+        if (question.validate(answer)) {
+            return if (question.answers.contains(answer.toLowerCase())) {
                     question = question.nextQuestion()
                     "Отлично - ты справился\n${question.question}" to status.color
-                }
-                status == Status.CRITICAL -> {
+            } else {
+                if (status.equals(Status.CRITICAL)) {
                     question = Question.NAME
                     status = Status.NORMAL
                     "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
-                }
-
-
-                else -> {
+                } else {
                     status = status.nextStatus()
                     "Это неправильный ответ\n${question.question}" to status.color
-
                 }
-
             }
         } else {
-            "${a.msg}\n${question.question}" to status.color
-
+            return "${question.validation}\n${question.question}" to status.color
         }
-
     }
 
 
@@ -67,90 +49,60 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         }
     }
 
-
-    enum class Question(val question: String, val answers: List<String>) {
-        NAME("Как меня зовут?", listOf("бендер", "bender")) {
+    enum class Question(val question: String, val answers: List<String>, val validation: String) {
+        NAME(
+            "Как меня зовут?",
+            listOf("бендер", "bender"),
+            "Имя должно начинаться с заглавной буквы"
+        ) {
             override fun nextQuestion(): Question = PROFESSION
+            override fun validate(answer: String): Boolean =
+                answer.trim().firstOrNull()?.isUpperCase() ?: false
         },
-        PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
+        PROFESSION(
+            "Назови мою профессию?",
+            listOf("сгибальщик", "bender"),
+            "Профессия должна начинаться со строчной буквы"
+        ) {
             override fun nextQuestion(): Question = MATERIAL
+            override fun validate(answer: String): Boolean =
+                answer.trim().firstOrNull()?.isLowerCase() ?: false
         },
-        MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
+        MATERIAL(
+            "Из чего я сделан?",
+            listOf("металл", "дерево", "metal", "iron", "wood"),
+            "Материал не должен содержать цифр"
+        ) {
             override fun nextQuestion(): Question = BDAY
+            override fun validate(answer: String): Boolean =
+                Regex("""\d+""").containsMatchIn(answer).not()
         },
-        BDAY("Когда меня создали?", listOf("2993")) {
+        BDAY(
+            "Когда меня создали?",
+            listOf("2993"),
+            "Год моего рождения должен содержать только цифры"
+        ) {
             override fun nextQuestion(): Question = SERIAL
+            override fun validate(answer: String): Boolean = answer.trim().isDigitsOnly()
+
         },
-        SERIAL("Мой серийный номер?", listOf("2716057")) {
+        SERIAL(
+            "Мой серийный номер?",
+            listOf("2716057"),
+            "Серийный номер содержит только цифры, и их 7"
+        ) {
             override fun nextQuestion(): Question = IDLE
+            override fun validate(answer: String): Boolean =
+                answer.trim().isDigitsOnly() && answer.length == 7
         },
-        IDLE("На этом все, вопросов больше нет", listOf()) {
+        IDLE("На этом все, вопросов больше нет", listOf(), "") {
             override fun nextQuestion(): Question = IDLE
+            override fun validate(answer: String): Boolean = false
         };
 
         abstract fun nextQuestion(): Question
+        abstract fun validate(answer: String): Boolean
 
 
     }
-
-    enum class Validation(val msg: String) {
-        OK(" "),
-        ERROR_NAME("Имя должно начинаться с заглавной буквы"),
-        ERROR_PROFESSION("Профессия должна начинаться со строчной буквы"),
-        ERROR_MATERIAL("Материал не должен содержать цифр"),
-        ERROR_BDAY("Год моего рождения должен содержать только цифры"),
-        ERROR_SERIAL("Серийный номер содержит только цифры, и их 7")
-    }
-
-    fun validationCheck(data: String): Validation {
-        return when (question) {
-            Question.NAME -> {
-                when {
-                    data.isBlank() -> Validation.ERROR_NAME
-                    data[0].isUpperCase() -> Validation.OK
-                    else -> Validation.ERROR_NAME
-                }
-            }
-            Question.PROFESSION -> {
-                when {
-                    data.isBlank() -> Validation.ERROR_PROFESSION
-                    data[0].isLowerCase() -> Validation.OK
-                    else -> Validation.ERROR_PROFESSION
-                }
-            }
-
-            Question.MATERIAL -> {
-                when {
-                    data.isBlank() -> Validation.ERROR_MATERIAL
-                    data.contains(Regex("\\d")) -> Validation.ERROR_MATERIAL
-                    else -> Validation.OK
-                }
-
-            }
-            Question.BDAY -> {
-                when {
-                    data.isBlank() -> Validation.ERROR_BDAY
-                    data.isDigitsOnly() -> Validation.OK
-                    else -> Validation.ERROR_BDAY
-                }
-
-
-            }
-            Question.SERIAL -> {
-                when {
-                    data.isBlank() -> Validation.ERROR_SERIAL
-                    data.isDigitsOnly() && data.length == 7 -> Validation.OK
-                    else -> Validation.ERROR_SERIAL
-                }
-
-            }
-
-            Question.IDLE -> {
-                Validation.OK
-            }
-
-        }
-    }
-
-
 }

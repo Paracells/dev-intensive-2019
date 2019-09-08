@@ -1,24 +1,23 @@
 package ru.skillbranch.devintensive.utils
 
-import android.content.Context
-
-
 object Utils {
+    fun parseFullName(fullName: String?): Pair<String?, String?> {
+        val newFullName = fullName?.trim()
+        val parts: List<String>? = newFullName?.split(" ")
 
-    fun parseFullName(fullName: String?) = when {
-        fullName.isNullOrBlank() -> null to null
-        else -> with(fullName.replace("\\s+".toRegex(), " ").split(" ")) {
-            getOrNull(0)?.run { if (isBlank()) null else this } to getOrNull(1)?.run { if (isBlank()) null else this }
+        var firstName = parts?.getOrNull(0)
+        var lastName = parts?.getOrNull(1)
+        if (fullName.isNullOrBlank() || fullName.isEmpty() || fullName == " ") {
+            firstName = null
+            lastName = null
         }
+        return firstName to lastName
     }
 
-
-    //
-    fun transliteration(payload: String, divider: String = " ") =
-
-        payload.replace(Regex("[абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ]")) {
+    fun transliteration(payload: String, divider: String = " "): String {
+        val tsstring =
+            payload.replace(Regex("[абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]")) {
             when (it.value) {
-                " " -> divider
                 "а" -> "a"
                 "б" -> "b"
                 "в" -> "v"
@@ -52,13 +51,12 @@ object Utils {
                 "э" -> "e"
                 "ю" -> "yu"
                 "я" -> "ya"
-                "А" -> "A"
+                "А" -> "А"
                 "Б" -> "B"
                 "В" -> "V"
                 "Г" -> "G"
                 "Д" -> "D"
                 "Е" -> "E"
-                "Ё" -> "E"
                 "Ж" -> "Zh"
                 "З" -> "Z"
                 "И" -> "I"
@@ -77,48 +75,30 @@ object Utils {
                 "Х" -> "H"
                 "Ц" -> "C"
                 "Ч" -> "Ch"
-                "Ш" -> "Sh"
-                "Щ" -> "Sh'"
+                "Ш" -> "Sh'"
+                "Щ" -> "Sh"
                 "Ъ" -> ""
                 "Ы" -> "I"
                 "Ь" -> ""
                 "Э" -> "E"
                 "Ю" -> "Yu"
                 "Я" -> "Ya"
-
+                "" -> "'"
                 else -> it.value
             }
-
         }
-
-
-    fun toInitials(firstName: String?, lastName: String?) = when {
-
-        firstName.isNullOrBlank() && lastName.isNullOrBlank() -> null
-        else -> "${firstName?.trim()?.take(1) ?: ""}${lastName?.trim()?.take(1) ?: ""}".toUpperCase()
-
-
+        return if (divider != " ") tsstring.replace(" ", divider) else tsstring
     }
 
-    fun convertPxToDp(context: Context, px: Int): Int {
-        val scale = context.resources.displayMetrics.density
-        return (px / scale + 0.5f).toInt()
+    fun toInitials(firstName: String?, lastName: String?): String? {
+        var initials: String?
+        when {
+            firstName.isNullOrBlank() && lastName.isNullOrBlank() -> initials = null
+            firstName.isNullOrBlank() -> initials = lastName?.first().toString().toUpperCase()
+            lastName.isNullOrBlank() -> initials = firstName.first().toString().toUpperCase()
+            else -> initials =
+                (firstName.first().toString() + lastName.first().toString()).toUpperCase()
+        }
+        return (initials)
     }
-
-    fun convertDpToPx(context: Context, dp: Int): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dp * scale + 0.5f).toInt()
-    }
-
-    fun convertSpToPx(context: Context, sp: Int): Int {
-        return sp * context.resources.displayMetrics.scaledDensity.toInt()
-    }
-
-
-
 }
-
-
-
-
-

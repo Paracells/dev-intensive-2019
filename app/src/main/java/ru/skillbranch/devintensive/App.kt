@@ -12,19 +12,15 @@ class App : Application() {
         fun applicationContext(): Context {
             return instance!!.applicationContext
         }
-
     }
 
     init {
         instance = this
     }
-
     override fun onCreate() {
         super.onCreate()
         PreferencesRepository.getAppTheme().also {
             AppCompatDelegate.setDefaultNightMode(it)
         }
-        //TODO call once when application created
-
     }
 }

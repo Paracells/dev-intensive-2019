@@ -1,6 +1,13 @@
 <resources>
 
 
+    <style name="ActivityTransitions" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/bottom_up</item>
+        <item name="android:activityOpenExitAnimation">@anim/idle</item>
+        <item name="android:activityCloseEnterAnimation">@anim/idle</item>
+        <item name="android:activityCloseExitAnimation">@anim/bottom_down</item>
+    </style>
+
     <style name="Profile">
 
     </style>
@@ -17,7 +24,7 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="Profile.EditText.MultiLine" parent="Profile.EditText">
+    <style name="Profile.EditText.Multiline" parent="Profile.EditText">
         <item name="android:inputType">textMultiLine</item>
         <item name="android:maxLength">128</item>
     </style>
@@ -49,19 +56,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/font_large_20</item>
     </style>
-
     <style name="Profile.InfoItem">
         <item name="android:paddingTop">@dimen/spacing_normal_16</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:paddingLeft">@dimen/spacing_normal_16</item>
         <item name="android:paddingRight">@dimen/spacing_normal_16</item>
         <item name="android:minHeight">72dp</item>
-    </style>
-
-    <style name="SplashTheme">
-        <item name="android:windowBackground">@drawable/splash</item>
-        <!-- для Android 5+ вы можете поменять цвет colorPrimaryDark, чтобы соответствовать цвету windowBackground -->
-        <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
 
 

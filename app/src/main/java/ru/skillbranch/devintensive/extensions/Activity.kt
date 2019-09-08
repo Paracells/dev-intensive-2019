@@ -1,37 +1,30 @@
 package ru.skillbranch.devintensive.extensions
 
+import android.R.id.content
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
+import android.view.View
 import android.view.inputmethod.InputMethodManager
-import ru.skillbranch.devintensive.ui.profile.ProfileActivity
-
-fun ProfileActivity.isKeyboardClosed(): Boolean {
-    val rootView = this.window.decorView
-    val rect = Rect()
-    rootView.getWindowVisibleDisplayFrame(rect)
-    val h = rootView.rootView.height
-    val kh = h - rect.bottom
-    return kh <= h * .15
-}
-
-fun ProfileActivity.isKeyboardOpen(): Boolean {
-    val rootView = this.window.decorView
-    val rect = Rect()
-    rootView.getWindowVisibleDisplayFrame(rect)
-    val h = rootView.rootView.height
-    val kh = h - rect.bottom
-
-    return kh > h * .15
-}
 
 fun Activity.hideKeyboard() {
     val view = this.currentFocus
     view?.let { v ->
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(v.windowToken, 0)
+        imm?.let { it.hideSoftInputFromWindow(v.windowToken, 0) }
     }
-
 }
 
+fun Activity.isKeyboardOpen(): Boolean {
+    val rootView = findViewById<View>(content)
+    val softKeyboardHeight = 100
+    val rect = Rect()
 
+    rootView.getWindowVisibleDisplayFrame(rect)
+
+    val dm = rootView.resources.displayMetrics
+    val heightDiff = rootView.bottom - rect.bottom
+    return heightDiff > softKeyboardHeight * dm.density
+}
+
+fun Activity.isKeyboardClosed(): Boolean = !this.isKeyboardOpen()

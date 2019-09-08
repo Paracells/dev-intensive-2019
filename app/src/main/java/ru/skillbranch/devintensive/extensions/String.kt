@@ -1,41 +1,18 @@
 package ru.skillbranch.devintensive.extensions
 
-fun String.truncate(value: Int = 16): String {
-    var a = this.trim()
-    if (a.length >= value+1) {
-        return "${(this.substring(0, value+1)).trim()}..."
+fun String.truncate(i: Int = 16): String {
+    val add = "..."
+    if (this.trim().length > i) {
+        var newStr = this.trim().substring(0, i).trim()
+        return "$newStr$add"
     } else {
         return "${this.trim()}"
     }
-
 }
 
-/*
- if (this.length >=value ){
-        "${this.substring(0,value).trimStart().trimEnd()}..."
-    } else {
-        return "${this}"
-    }
- */
 fun String.stripHtml(): String {
-    var intag = false
-    val inp = this.trim().replace("\\s+".toRegex(), " ").replace("\\n".toRegex(), "")
-    println(inp)
-    var outp = ""
+    val streg = Regex("<[^<]*?>|&\\d+;").replace(this, "")
+    val newStreg = Regex("""\s+""").replace(streg, " ")
 
-    for (i in 0 until inp.length) {
-        if (!intag && inp[i] == '<') {
-            intag = true
-            continue
-        }
-        if (intag && inp[i] == '>') {
-            intag = false
-            continue
-        }
-        if (!intag) {
-            outp += inp[i]
-        }
-    }
-    return outp.trim()
-
+    return "${newStreg}"
 }
